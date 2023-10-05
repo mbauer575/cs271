@@ -59,6 +59,9 @@ int fib(int n)
  *
  * returns: largest value in arr
  */
+
+// was having some issue with max, so I undef'd it and redefined it in the function 
+#undef max
 int max(int arr[], int n)
 {
     int max_val = arr[0];
