@@ -1,9 +1,9 @@
 /****************************************
  * C-ploration 2 for CS 271
- * 
+ *
  * [NAME] $YOUR_NAME$
  * [TERM] FALL $YEAR$
- * 
+ *
  ****************************************/
 
 #include <stdio.h>
@@ -11,8 +11,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define MAX_LIMIT 200  /* max size for static string */
-
+#define MAX_LIMIT 200 /* max size for static string */
 
 /* Function: length
  * -------------
@@ -23,16 +22,17 @@
  *
  * returns: the length of the string
  */
-int length(char* txt) {
+int length(char *txt)
+{
 	int len = 0;
-	
-	for (int i = 0; txt[i] != '\0'; i++){
+
+	for (int i = 0; txt[i] != '\0'; i++)
+	{
 		len++;
 	}
 
-	return len;  
+	return len;
 }
-
 
 /* Function: welcome
  * -------------
@@ -45,29 +45,31 @@ int length(char* txt) {
  * hello: string containing "hello"
  * name: string containing the name
  *
- * returns: "Hello NAME!", based on a given NAME 
+ * returns: "Hello NAME!", based on a given NAME
  */
-char *welcome(char* hello, char* name) {
+char *welcome(char *hello, char *name)
+{
 	// dynamically allocate a new string
-	char *message = malloc(sizeof(char)*MAX_LIMIT);
-		
+	char *message = malloc(sizeof(char) * MAX_LIMIT);
+
 	int i = 0, j = 0;
-	
-	for(int i =0;hello[i] != '\0'; i++){
+
+	for (int i = 0; hello[i] != '\0'; i++)
+	{
 		message[j] = hello[i];
 		j++;
 	}
 	message[j] = ' ';
 	j++;
-	for(i =0;name[i] != '\0'; i++){
+	for (i = 0; name[i] != '\0'; i++)
+	{
 		message[j] = name[i];
 		j++;
 	}
 	message[j] = '!';
-	
-	return message;	
-}
 
+	return message;
+}
 
 /* Function: reverse
  * -------------
@@ -79,13 +81,13 @@ char *welcome(char* hello, char* name) {
  *
  * returns: nothing. result contains the reversed string.
  */
-void reverse(char* txt, char* result) {
-	for(int i = 0; txt[i] != '\0'; i++){
-		result[i] = txt[length(txt)-i-1];
+void reverse(char *txt, char *result)
+{
+	for (int i = 0; txt[i] != '\0'; i++)
+	{
+		result[i] = txt[length(txt) - i - 1];
 	}
-	
 }
-
 
 /* Function: vowels
  * -------------
@@ -96,19 +98,21 @@ void reverse(char* txt, char* result) {
  *
  * returns: integer count of vowels
  */
-int vowels(char* txt) {
+int vowels(char *txt)
+{
 	int vowel = 0;
 
-	for (int i = 0; txt[i] != '\0'; i++){
+	for (int i = 0; txt[i] != '\0'; i++)
+	{
 		txt[i] = tolower(txt[i]);
-		if (txt[i] == 'a' || txt[i] == 'e' || txt[i] == 'i' || txt[i] == 'o' || txt[i] == 'u'){
+		if (txt[i] == 'a' || txt[i] == 'e' || txt[i] == 'i' || txt[i] == 'o' || txt[i] == 'u')
+		{
 			vowel++;
 		}
 	}
 	txt[0] = toupper((unsigned char)txt[0]);
 	return vowel;
 }
-
 
 /* Function: quartile
  * -------------
@@ -124,23 +128,29 @@ int vowels(char* txt) {
  *
  * returns: integer quarter [1..4]
  */
-int quartile(char* name) {
+int quartile(char *name)
+{
 	char test[2];
 	test[0] = name[0];
-	if (strcmp(test, "A") >= 0 && strcmp(test, "F") <= 0){
-			return 1;
-		}else if (strcmp(test, "G") >= 0 && strcmp(test, "L") <= 0){
-			return 2;
-		}else if (strcmp(test, "M") >= 0 && strcmp(test, "R") <= 0){
-			return 3;
-		}else if (strcmp(test, "S") >= 0 && strcmp(test, "Z") <= 0){
-			return 4;
-		}
-		else 
-			return 0;
-
+	if (strcmp(test, "A") >= 0 && strcmp(test, "F") <= 0)
+	{
+		return 1;
+	}
+	else if (strcmp(test, "G") >= 0 && strcmp(test, "L") <= 0)
+	{
+		return 2;
+	}
+	else if (strcmp(test, "M") >= 0 && strcmp(test, "R") <= 0)
+	{
+		return 3;
+	}
+	else if (strcmp(test, "S") >= 0 && strcmp(test, "Z") <= 0)
+	{
+		return 4;
+	}
+	else
+		return 0;
 }
-
 
 /* Function: main
  * -------------
@@ -149,67 +159,81 @@ int quartile(char* name) {
  * =========================
  * DO NOT EDIT MAIN FUNCTION
  * =========================
- * 
+ *
  * argc: number of arguments
  * argv: array of arguments (array of array of chars)
  *
  * returns: 0 if no errors, 1 otherwise.
  */
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	// declare a string with value
 	char hello[] = "Hello";
 	// declare an empty string of max size
 	char name[MAX_LIMIT];
-	
+
 	// prompt user for name
 	printf("What is your name? ");
 	// the [^\n] means to discard the newline character
-	scanf("%[^\n]s", name);  
+	scanf("%[^\n]s", name);
 	// make sure name starts with a capital letter
 	name[0] = toupper((unsigned char)name[0]);
-	
+
 	// when no arguments given
-	if (argc < 2){
+	if (argc < 2)
+	{
 		// Task 1: display welcome
 		char *greeting = welcome(hello, name);
 		printf("%s\n", greeting);
 
-		// Task 2: count characters 
+		// Task 2: count characters
 		int len = length(name);
 		printf("%s is %d characters long.\n", name, len);
-		
+
 		// Task 3: reverse string
-		char backwards[length(name)]; 
+		char backwards[length(name)];
 		reverse(name, backwards);
 		printf("%s backwards is %s.\n", name, backwards);
-		
+
 		// Task 4: count vowels
-		printf("%s contains %d vowels.\n", name, vowels(name));	
-		
+		printf("%s contains %d vowels.\n", name, vowels(name));
+
 		// Task 5: find which quarter of the alphabet
-		printf("%s is in quartile #%d alphabetically.", name, quartile(name));		
-	}else{
+		printf("%s is in quartile #%d alphabetically.", name, quartile(name));
+	}
+	else
+	{
 		/******************************
 		 *  USED BY GRADESCOPE TESTS  *
 		 *****************************/
-		if (!strcmp(argv[1], "-count")){ 
+		if (!strcmp(argv[1], "-count"))
+		{
 			printf("%d\n", length(name));
-		}else if (!strcmp(argv[1], "-greeting")){ 
-			printf("%s\n", welcome(hello, name));			
-		}else if (!strcmp(argv[1], "-reverse")){ 
-			char backwards[length(name)]; 
+		}
+		else if (!strcmp(argv[1], "-greeting"))
+		{
+			printf("%s\n", welcome(hello, name));
+		}
+		else if (!strcmp(argv[1], "-reverse"))
+		{
+			char backwards[length(name)];
 			reverse(name, backwards);
 			printf("%s\n", backwards);
-		}else if (!strcmp(argv[1], "-vowel")){ 
-			printf("%d\n", vowels(name));				
-		}else if (!strcmp(argv[1], "-quartile")){ 
-			printf("%d\n", quartile(name));			
-		}else{
+		}
+		else if (!strcmp(argv[1], "-vowel"))
+		{
+			printf("%d\n", vowels(name));
+		}
+		else if (!strcmp(argv[1], "-quartile"))
+		{
+			printf("%d\n", quartile(name));
+		}
+		else
+		{
 			// incorrect command, exit with error
 			fprintf(stderr, "[error] Unknown command %s.\n", argv[1]);
 			return 1;
-		}		
+		}
 	}
-    return 0;
+	return 0;
 }
