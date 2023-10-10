@@ -1,8 +1,8 @@
 /****************************************
  * C-ploration 2 for CS 271
  *
- * [NAME] $YOUR_NAME$
- * [TERM] FALL $YEAR$
+ * [NAME] Maxwell Bauer
+ * [TERM] FALL 2023
  *
  ****************************************/
 
@@ -87,6 +87,7 @@ void reverse(char *txt, char *result)
 	{
 		result[i] = txt[length(txt) - i - 1];
 	}
+	result[length(txt)] = '\0';
 }
 
 /* Function: vowels
