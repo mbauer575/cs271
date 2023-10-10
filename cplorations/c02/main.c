@@ -105,7 +105,7 @@ int vowels(char* txt) {
 			vowel++;
 		}
 	}
-
+	txt[0] = toupper((unsigned char)txt[0]);
 	return vowel;
 }
 
@@ -126,9 +126,18 @@ int vowels(char* txt) {
  */
 int quartile(char* name) {
 
-	/* REPLACE WITH YOUR CODE */
-	
-	return -1; // <==fix!
+	if (strcmp(name, "A") >= 0 && strcmp(name, "F") <= 0){
+			return 1;
+		}else if (strcmp(name, "G") >= 0 && strcmp(name, "L") <= 0){
+			return 2;
+		}else if (strcmp(name, "M") >= 0 && strcmp(name, "R") <= 0){
+			return 3;
+		}else if (strcmp(name, "S") >= 0 && strcmp(name, "Z") <= 0){
+			return 4;
+		}
+		else 
+			return 0;
+
 }
 
 
