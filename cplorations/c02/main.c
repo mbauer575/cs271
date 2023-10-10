@@ -125,14 +125,15 @@ int vowels(char* txt) {
  * returns: integer quarter [1..4]
  */
 int quartile(char* name) {
-
-	if (strcmp(name, "A") >= 0 && strcmp(name, "F") <= 0){
+	char test[2];
+	test[0] = name[0];
+	if (strcmp(test, "A") >= 0 && strcmp(test, "F") <= 0){
 			return 1;
-		}else if (strcmp(name, "G") >= 0 && strcmp(name, "L") <= 0){
+		}else if (strcmp(test, "G") >= 0 && strcmp(test, "L") <= 0){
 			return 2;
-		}else if (strcmp(name, "M") >= 0 && strcmp(name, "R") <= 0){
+		}else if (strcmp(test, "M") >= 0 && strcmp(test, "R") <= 0){
 			return 3;
-		}else if (strcmp(name, "S") >= 0 && strcmp(name, "Z") <= 0){
+		}else if (strcmp(test, "S") >= 0 && strcmp(test, "Z") <= 0){
 			return 4;
 		}
 		else 
