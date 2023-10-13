@@ -23,8 +23,9 @@ int main(int argc, const char *argv[])
 	char input_file[MAX_LINE_LENGTH];
 	strcpy(input_file, "asm/");
 	strcat(input_file, argv[1]);
-
-	FILE *fin = fopen(input_file, "r");
+	
+	// for gradescope use argv[1] directly instead of input_file
+	FILE *fin = fopen(argv[1], "r");
 
 	if(fin == NULL)
 	{
