@@ -89,7 +89,7 @@ void parse(FILE *file)
                 }
                 if (symtable_find(extracted_line) != NULL)
                 {
-                    exit_program(EXIT_SYMBOL_ALREADY_EXISTS, line_number, extracted_line);
+                    exit_program(EXIT_SYMBOL_ALREADY_EXISTS, line_number, line);
                 }
                 symtable_insert(extracted_line, instr_num);
                 continue;

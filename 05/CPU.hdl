@@ -40,4 +40,38 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+    Not(in=instruction[15], out=isAInstruction);
+    Not(in=isAInstruction, out=isCInstruction);
+    
+    And(a=isCInstruction, b=instruction[5], out=destToARegister);    
+    Mux16(a=instruction, b=ALUout, sel=destToARegister, out=inputToARegister);
+
+    And(a=isCInstruction, b=instruction[4], out=loadDRegister);
+    DRegister(in=ALUout, load=loadDRegister, out=outputFromDRegister);  
+
+    Or(a=isAInstruction, b=destToARegister, out=loadARegister);    
+    ARegister(in=inputToARegister, load=loadARegister, out=outputFromARegister);
+
+    Mux16(a=outputFromARegister, b=inM, sel=instruction[12], out=inputToALU);
+
+    ALU(x=outputFromDRegister, y=inputToALU, zx=instruction[11], nx=instruction[10], 
+        zy=instruction[9], ny=instruction[8], f=instruction[7],
+        no=instruction[6], out=ALUout, zr=zeroFlag, ng=negativeFlag); 
+        
+    // Set outputs for writing memory
+    Or16(a=false, b=outputFromARegister, out[0..14]=addressM);
+    Or16(a=false, b=ALUout, out=outM);
+    And(a=isCInstruction, b=instruction[3], out=writeM);
+    
+    // calc PCload & PCinc - whether to load PC with A reg
+    And(a=zeroFlag, b=instruction[1], out=jumpIfZero);   
+    And(a=negativeFlag, b=instruction[2], out=jumpIfNegative);    
+    Or(a=zeroFlag, b=negativeFlag, out=zeroOrNegative);
+    Not(in=zeroOrNegative, out=positive);           
+    And(a=positive, b=instruction[0], out=jumpIfPositive);
+    Or(a=jumpIfZero, b=jumpIfNegative, out=jumpIfZeroOrNegative);
+    Or(a=jumpIfZeroOrNegative, b=jumpIfPositive, out=jumpConditionMet);
+    And(a=isCInstruction, b=jumpConditionMet, out=loadPC); 
+    Not(in=loadPC, out=incrementPC);
+    PC(in=outputFromARegister, inc=incrementPC, load=loadPC, reset=reset, out[0..14]=pc);
 }
