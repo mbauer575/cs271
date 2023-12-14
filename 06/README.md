@@ -16,4 +16,4 @@ To summarize, we have the following files:
 To run the assembler, follow these steps:
 
 1. Make the file with make.
-2. Run it with ./main <path to asm file>.
+2. Run it with ./main ./filepath/asmfile.asm
