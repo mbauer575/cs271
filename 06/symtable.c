@@ -20,7 +20,10 @@ int hash(char *str)
 
     return hash % SYMBOL_TABLE_SIZE;
 }
-
+hack_addr symtable_get_addr(char *key){
+    int hashIndex = hash(key);
+    return hashArray[hashIndex]->addr;
+}
 void symtable_insert(char *key, hack_addr addr)
 {
     struct Symbol *Symbol_insert = (struct Symbol *)malloc(sizeof(struct Symbol));

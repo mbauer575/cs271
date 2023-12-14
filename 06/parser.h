@@ -79,7 +79,9 @@ void parse_C_instruction(char *line, c_instruction *instr);
 bool is_Atype(const char *);
 bool is_label(const char *);
 bool is_Ctype(const char *);
+void assemble(const char * file_name, instruction *instructions, int num_instructions);
 
+opcode instruction_to_opcode(c_instruction instr);
 void add_predefined_symbols();
 
 #endif

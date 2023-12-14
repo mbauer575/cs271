@@ -14,7 +14,7 @@
 int main(int argc, const char *argv[])
 {
 	instruction *instructions = malloc(MAX_INSTRUCTION_COUNT * sizeof(instruction));
-	if (argc == 1)
+	if (argc == 1)		
 	{
 		printf("ERROR: Usage: %s [filename]\n", argv[0]);
 		exit(EXIT_FAILURE);
@@ -29,7 +29,8 @@ int main(int argc, const char *argv[])
 	{
 		exit_program(EXIT_CANNOT_OPEN_FILE, argv[1]);
 	}
-	parse(fin, instructions);
+	int num_instructions = parse(fin, instructions);
 	fclose(fin);
+	assemble(argv[1], instructions, num_instructions);
 	free(instructions);
 }

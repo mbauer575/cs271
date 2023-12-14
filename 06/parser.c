@@ -294,3 +294,77 @@ void parse_C_instruction(char *line, c_instruction *instr)
     instr->a = a;
     instr->dest = str_to_destid(dest);
 }
+void assemble(const char * file_name, instruction* instructions, int num_instructions) {
+
+	//append .hack to file name
+	char *hack_file_name = (char*)malloc(strlen(file_name) + 5);
+	strcpy(hack_file_name, file_name);
+	strcat(hack_file_name, ".hack");
+
+	FILE *out = fopen(hack_file_name, "w");
+
+	int var_addr = 16;
+
+	for (int i = 0; i < num_instructions; i++) {
+		instruction instr = instructions[i];
+		opcode op;
+
+		if (instr.type == 0) {
+			//a instruction
+			if (instr.a.is_addr) {
+				op = (opcode)instr.a.instrs.address;
+
+				//fprintf(out, "%016d", instr.a.instrs.address);
+			} else {
+				bool pr = false;
+    			if (strcmp(instr.a.instrs.label, "screen.setcolor") == 0) {
+					printf("screen.setcolor\n");
+					pr = true;
+				}
+    
+				
+				if (symtable_find(instr.a.instrs.label) != NULL) {
+					op = symtable_get_addr(instr.a.instrs.label);
+					if (pr) {
+						printf("found: %d\n", op);
+				
+					printf("FS:%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(op));
+	}
+					}
+				else {
+					//printf("nuffin\n");
+					op = (opcode)var_addr;
+					printf("inserting %s at var_addr: %d\n", instr.a.instrs.label, var_addr);
+					symtable_insert(instr.a.instrs.label, var_addr++);
+					free(instr.a.instrs.label);
+if (pr) {
+						printf("not found: %d\n", op);
+				
+					printf("NF:%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(op));
+				printf("NS:%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(op));
+}
+				}
+				//fprintf(out, "%016d", symtable_get(*instr.a.instrs.label));
+			}
+		} else {
+			op = instruction_to_opcode(instr.c);
+
+		}
+		//print opcode to binary
+		//printf("FINAL==============:%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(op));
+		fprintf(out, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(op));
+	}
+ };
+
+ opcode instruction_to_opcode(c_instruction instr) {
+	opcode op = 0;
+
+	op |= (7 << 13);
+	op |= (instr.a << 12);
+	op |= (instr.comp << 6);
+	op |= (instr.dest << 3);
+	op |= (instr.jump);
+
+	return op;
+ 
+ };
